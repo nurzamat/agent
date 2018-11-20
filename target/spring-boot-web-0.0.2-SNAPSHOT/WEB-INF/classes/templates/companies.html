@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Companies</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <a th:href="@{/companies/new}">Создать</a>
+    <div th:if="${not #lists.isEmpty(companies)}">
+        <h2>Организации</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Наименование</th> 
+                <th>Вебсайт</th> 
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="company : ${companies}">
+                <td th:text="${company.name}"></td>
+                <td th:text="${company.website}"></td>
+                <td><a th:href="@{'/companies/edit/' + company.id}">Редактировать</a></td>
+                <td><a th:href="${'#mymodal_'  + company.id}" data-toggle="modal">Удалить</a></td>
+
+                <div th:id="${'mymodal_' + company.id}" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Удаление</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Вы действительно хотите удалить? </h5>
+                                <p th:text="${'Наименование: '  + company.name}"></p>
+                                <p th:text="${'Вебсайт: '  + company.website}"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                <a th:href="@{'/companies/delete/' + company.id}"><i class="fa fa-trash-o"></i>Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+        </table>
+        <!-- Pagination Bar -->
+        <div th:fragment='paginationbar'>
+            <div>
+                <ul class='pagination pagination-centered'>
+                    <li th:class="${page.firstPage}?'disabled':''">
+                        <span th:if='${page.firstPage}'>← First</span>
+                        <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'>← First</a>
+                    </li>
+                    <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
+                        <span th:if='${not page.hasPreviousPage}'>«</span>
+                        <a th:if='${page.hasPreviousPage}' th:href='@{${page.url}(page=${page.number-2},size=${page.size})}' title='Go to previous page'>«</a>
+                    </li>
+                    <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''">
+                        <span th:if='${item.current}' th:text='${item.number}'>1</span>
+                        <a th:if='${not item.current}' th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'><span th:text='${item.number}'>1</span></a>
+                    </li>
+                    <li th:class="${page.hasNextPage}? '' : 'disabled'">
+                        <span th:if='${not page.hasNextPage}'>»</span>
+                        <a th:if='${page.hasNextPage}' th:href='@{${page.url}(page=${page.number},size=${page.size})}' title='Go to next page'>»</a>
+                    </li>
+                    <li th:class="${page.lastPage}? 'disabled' : ''">
+                        <span th:if='${page.lastPage}'>Last →</span>
+                        <a th:if='${not page.lastPage}' th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last →</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

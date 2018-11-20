@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="../../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+<div class="container">
+    <div th:fragment="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header" style="width: 100%">
+                    <ul class="nav navbar-nav">
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#" th:href="@{/companies}">Организации</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#" th:href="@{/users}">Пользователи</a></li>
+                        <li><a href="#" th:href="@{/trade_points}">Торговые точки</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" style="alignment: right">
+                        <li sec:authorize="isAuthenticated()">
+                            <a href="#"><span sec:authentication="name"></span> |
+                                <span sec:authentication="principal.authorities"></span> </a>
+                        </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <a th:href="@{/logout}">Выход</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="jumbotron">
+            <div class="row text-center">
+                <div class="">
+                    <h2>Agent</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
