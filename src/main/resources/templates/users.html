@@ -26,7 +26,7 @@
                 <td th:text="${user.fullName}"></td>
                 <td th:text="${user.phoneNumber}"></td>
                 <td th:text="${user.role.name}"></td>
-                <td><a th:href="@{'/users/edit/' + user.id}">Редактировать</a></td>
+                <td><a th:href="@{'/users/edit/' + ${user.id}}">Редактировать</a></td>
                 <td><a th:href="${'#mymodal_'  + user.id}" data-toggle="modal">Удалить</a></td>
 
                 <div th:id="${'mymodal_' + user.id}" class="modal fade">
@@ -43,7 +43,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                                <a th:href="@{'/users/delete/' + user.id}"><i class="fa fa-trash-o"></i>Удалить</a>
+                                <a th:href="@{'/users/delete/' + ${user.id}}"><i class="fa fa-trash-o"></i>Удалить</a>
                             </div>
                         </div>
                     </div>

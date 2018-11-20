@@ -22,7 +22,7 @@
             <tr th:each="company : ${companies}">
                 <td th:text="${company.name}"></td>
                 <td th:text="${company.website}"></td>
-                <td><a th:href="@{'/companies/edit/' + company.id}">Редактировать</a></td>
+                <td><a th:href="@{'/companies/edit/' + ${company.id}}">Редактировать</a></td>
                 <td><a th:href="${'#mymodal_'  + company.id}" data-toggle="modal">Удалить</a></td>
 
                 <div th:id="${'mymodal_' + company.id}" class="modal fade">
@@ -39,7 +39,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                                <a th:href="@{'/companies/delete/' + company.id}"><i class="fa fa-trash-o"></i>Удалить</a>
+                                <a th:href="@{'/companies/delete/' + ${company.id}}"><i class="fa fa-trash-o"></i>Удалить</a>
                             </div>
                         </div>
                     </div>
